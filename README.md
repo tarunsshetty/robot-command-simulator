@@ -1,17 +1,62 @@
-# robot-command-simulator
-A small Python project where I control a robot on a 10x10 grid using text commands like forward, left and right.
-Robot Command Simulator
+# Robot Command Simulator
 
-This is a small Python program where I move a robot around a 10x10 grid by typing commands. I made it to practice Python and to see how a program can take instructions one at a time.
+A small Python program I wrote where you control a robot on a 10x10 grid
+from the terminal. The robot is shown as `@`, and the grid is printed again
+after every command so you can see where it went.
 
-The robot starts at the bottom left corner facing north. You type F to move forward, L to turn left, R to turn right and Q to quit. After every command the grid is printed again with the robot shown as @.
+## Commands
 
-If the robot is at the edge and you tell it to go forward, it says "Wall ahead" and stays where it is.
+- `F` moves the robot one step forward
+- `L` turns it left
+- `R` turns it right
+- `Q` quits
 
-To run it, install Python and type this in the terminal:
+Lowercase works too, so `f` is the same as `F`. The robot starts at (0, 0)
+facing north. If it tries to walk off the grid, it just stays where it is
+and prints "Wall ahead!".
 
-    python robot_commands.py
+## Running it
 
-The hardest part for me was the turning. I had to find a way to go from W back to N, and I used a list of directions with % 4 to do it.
+You only need Python 3.
 
-Right now it is very basic. Next I want to add walls inside the grid, a goal cell, and a way to type many commands at once like FFRFF.
+```
+git clone https://github.com/<your-username>/robot-command-simulator.git
+cd robot-command-simulator
+python robot_simulator.py
+```
+
+## Sample run
+
+```
+. . . . . . . . . .
+. . . . . . . . . .
+. . . . . . . . . .
+. . . . . . . . . .
+. . . . . . . . . .
+. . . . . . . . . .
+. . . . . . . . . .
+. . . . . . . . . .
+. . . . . . . . . .
+@ . . . . . . . . .
+Position: 0 0  Facing: N
+
+Command: F
+```
+
+## How it works
+
+The robot's position is stored in `x` and `y`, and its direction in `facing`.
+For turning, I keep the directions in a list (`N, E, S, W`) and move the
+index up or down by one. The `% 4` makes it wrap around, so turning left
+from north goes to west.
+
+For moving, I first work out the new position and only update `x` and `y`
+if it is still inside the grid. That is how the wall check works.
+
+## What I'd like to add next
+
+Obstacles, and reading a whole command string like `FFRFFL` from a file
+instead of typing one command at a time.
+
+## Author
+Tarun.S.Shetty
